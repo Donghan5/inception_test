@@ -1,0 +1,70 @@
+# declare version
+version: '3'
+
+# all services
+services:
+# nginx
+    nginx:
+      container_name: nginx
+      build: requirements/nginx
+      image: nginx:42
+      depends_on:
+        - wordpress
+      networks:
+        - docker_network
+      ports:
+        - 443:443
+      volumes:
+        - wordpress_data:/var/www/html
+      restart: always
+
+# wordpress
+    wordpress:
+      container_name: wordpress
+      build:
+        context: ./requirements/wordpress
+        dockerfile: Dockerfile
+      image: wordpress:42
+      depends_on:
+        - mariadb
+      networks:
+        - docker_network
+      volumes:
+        - wordpress_data:/var/www/html/wordpress
+      env_file:
+        - .env
+      restart: always
+
+# mariadb
+    mariadb:
+      container_name: mariadb
+      build: requirements/mariadb
+      image: mariadb:42
+      env_file:
+        - .env
+      volumes:
+        - db_data:/var/lib/mysql
+      # it allows the access which share same network(docker_network)
+      networks:
+        - docker_network
+      restart: always
+
+# network setting
+networks:
+    docker_network:
+      driver: bridge
+
+# volumes setting (data)
+volumes:
+   db_data:
+     driver: local
+     driver_opts:
+        type: none
+        device: /home/donghank/data/mysql
+        o: bind
+   wordpress_data:
+      driver: local
+      driver_opts:
+        type: none
+        device: /home/donghank/data/wordpress
+        o: bind
