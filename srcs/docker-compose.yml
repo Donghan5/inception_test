@@ -30,7 +30,7 @@ services:
       networks:
         - docker_network
       volumes:
-        - wordpress_data:/var/www/html/wordpress
+        - wordpress_data:/var/www/html
       env_file:
         - .env
       restart: always
