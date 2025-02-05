@@ -21,4 +21,4 @@ mysql -e "FLUSH PRIVILEGES;"
 # shutdown
 mysqladmin -u root -p$SQL_ROOTPASSWORD shutdown
 
-exec mysql_safe
+exec mysqld_safe
