@@ -23,6 +23,6 @@ fi
 
 # if /run/php folder does not exist, create it
 if [ ! -d /run/php ]; then
-    mkdir ./run/php
+    mkdir /run/php
 fi
 /usr/sbin/php-fpm7.3 -F
