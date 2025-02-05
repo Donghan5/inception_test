@@ -11,7 +11,7 @@ RUN mkdir -p /etc/nginx/ssl
 RUN openssl req -newkey rsa:4096 -days 42 -nodes -x509 \
 -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=donghank.42.fr/UID=donghank" \
 -out /etc/ssl/certs/inception.crt \
--keyout /etc/ssl/private/inception.keyout
+-keyout /etc/ssl/private/inception.key
 
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 

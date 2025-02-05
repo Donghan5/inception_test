@@ -56,14 +56,14 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/donghank/data/wordpress'
+      device: 'pathtodata/wordpress'
 
   mariadb:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/donghank/data/mariadb'
+      device: 'pathtodata/mariadb'
 
 networks:
   inception:
