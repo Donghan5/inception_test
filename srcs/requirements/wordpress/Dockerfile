@@ -14,8 +14,7 @@ RUN cd /var/www/html && tar -xzf wordpress-6.0.tar.gz && rm wordpress-6.0.tar.gz
 
 COPY ./conf/php.conf /etc/php/7.3/fpm/pool.d/www.conf
 
-RUN chown -R www-data:www-data /var/www/html/wordpress
-# RUN chown -R root:root /var/www/html/wordpress
+RUN chown -R root:root /var/www/html/wordpress
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
