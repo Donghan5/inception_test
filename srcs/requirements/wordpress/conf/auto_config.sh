@@ -1,12 +1,22 @@
 #!bin/bash
 sleep 10
-if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
-    wp config create	--dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD \
-    					--dbhost=mariadb:3306 --path='/var/www/html/wordpress' --allow-root
 
-sleep 2
-wp core install     --url=$DOMAIN_NAME --title=$SITE_TITLE --admin_user=$ADMIN_USER --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL --allow-root --path='/var/www/html/wordpress'
-wp user create      --allow-root --role=author $USER1_LOGIN $USER1_MAIL --user_pass=$USER1_PASS --path='/var/www/html/wordpress' >> /log.txt
+if [ ! -e /var/www/html/wp-config.php ]; then
+    cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+    chown www-data:www-data /var/www/html/wp-config.php
+    chmod 644 /var/www/html/wp-config.php
+
+    wp config set DB_NAME "$SQL_DATABASE" --path='/var/www/html' --allow-root
+    wp config set DB_USER "$SQL_USER" --path='/var/www/html' --allow-root
+    wp config set DB_PASSWORD "$SQL_PASSWORD" --path='/var/www/html' --allow-root
+    wp config set DB_HOST "mariadb:3306" --path='/var/www/html' --allow-root
+
+    wp core install --url="$DOMAIN_NAME" --title="$SITE_TITLE" \
+                    --admin_user="$ADMIN_USER" --admin_password="$ADMIN_PASSWORD" \
+                    --admin_email="$ADMIN_EMAIL" --allow-root --path='/var/www/html'
+
+    wp user create --allow-root --role=author "$USER1_LOGIN" "$USER1_MAIL" \
+                    --user_pass="$USER1_PASS" --path='/var/www/html' >> /log.txt
 fi
 
 # echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
