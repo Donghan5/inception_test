@@ -23,4 +23,4 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 
 COPY conf/auto_config.sh auto_config.sh
 
-ENTRYPOINT [ "bash", "auto_config.sh" ]
+ENTRYPOINT [ "/bin/sh", "auto_config.sh" ]
