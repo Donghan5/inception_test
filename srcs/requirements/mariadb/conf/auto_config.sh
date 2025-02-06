@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # start mysql service
-service mysql start;
+exec mysqld_safe &
 
 # create a database (if it's not exist)
-mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
+mysql -e "CREATE DATABASE IF NOT EXISTS ${SQL_DATABASE};"
 
 # create user with a password
 mysql -e "CREATE USER IF NOT EXISTS ${SQL_USER}@'%' IDENTIFIED BY ${SQL_PASSWORD};"
