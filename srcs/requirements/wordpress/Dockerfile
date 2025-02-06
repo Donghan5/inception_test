@@ -9,12 +9,13 @@ RUN apt-get install -y php7.3\
 		php-mysql\
 		mariadb-client
 
-RUN wget https://wordpress.org/wordpress-6.0.tar.gz -P /var/www
-RUN cd /var/www && tar -xzf wordpress-6.0.tar.gz && rm wordpress-6.0.tar.gz
+RUN wget https://wordpress.org/wordpress-6.0.tar.gz -P /var/www/html
+RUN cd /var/www/html && tar -xzf wordpress-6.0.tar.gz && rm wordpress-6.0.tar.gz
 
 COPY ./conf/php.conf /etc/php/7.3/fpm/pool.d/www.conf
 
-RUN chown -R root:root /var/www/wordpress
+RUN chown -R www-data:www-data /var/www/html/wordpress
+# RUN chown -R root:root /var/www/html/wordpress
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
