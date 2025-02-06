@@ -4,6 +4,8 @@ RUN apt-get update && apt-get upgrade -y
 
 RUN apt-get -y install wget
 
+RUN apt-get -y install sendmail
+
 RUN apt-get install -y php7.3\
 		php-fpm\
 		php-mysql\
@@ -14,7 +16,9 @@ RUN cd /var/www/html && tar -xzf wordpress-6.0.tar.gz && rm wordpress-6.0.tar.gz
 
 COPY ./conf/php.conf /etc/php/7.3/fpm/pool.d/www.conf
 
-RUN chown -R root:root /var/www/html/wordpress
+# RUN chown -R root:root /var/www/html/wordpress
+RUN chown -R www-data:www-data /var/www/html/wordpress
+RUN chmod 755 /var/www/html/wordpress
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
