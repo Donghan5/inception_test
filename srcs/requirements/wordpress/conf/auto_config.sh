@@ -21,8 +21,8 @@ fi
 
 # echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
 # echo "define( 'SCRIPT_DEBUG', true );" >> /var/www/html/wordpress/wp-config.php
-# echo "define( 'WP_HOME', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
-# echo "define( 'WP_SITEURL', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
+echo "define( 'WP_HOME', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
+echo "define( 'WP_SITEURL', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
 
 # echo "define( 'WP_DEBUG', true);" >> /var/www/html/wordpress/wp-config.php
 # echo "define( 'WP_DEBUG_LOG', true);" >> /var/www/html/wordpress/wp-config.php
