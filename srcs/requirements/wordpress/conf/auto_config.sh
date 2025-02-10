@@ -26,7 +26,7 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
     echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "}" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
 
-
+	# add redirect home
     echo "add_filter('login_redirect', function(\$redirect_to, \$request, \$user) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "    if (!is_wp_error(\$user) && !in_array('administrator', \$user->roles)) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "        return home_url('/');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
@@ -34,13 +34,25 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
     echo "    return \$redirect_to;" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "}, 10, 3);" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
 
-	echo "add_action('init', function() {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+	# remove cache and cookie in wp-admin
+ 	echo "add_action('init', function() {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "    if (!current_user_can('manage_options')) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "        session_start();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "        $_SESSION = array();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "        if (ini_get('session.use_cookies')) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "            $params = session_get_cookie_params();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "            setcookie(session_name(), '', time() - 42000," >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "                $params['path'], $params['domain'], $params['secure'], $params['httponly']" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "            );" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "        }" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "        session_destroy();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "        header('Cache-Control: post-check=0, pre-check=0', false);" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "        header('Pragma: no-cache');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "        header('Expires: Sat, 01 Jan 2000 00:00:00 GMT');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "    }" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "});" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+
 fi
 
 echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
