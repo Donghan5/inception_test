@@ -21,7 +21,7 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
 	wp theme install astra --allow-root --path='/var/www/html/wordpress'
 	wp theme activate astra --allow-root --path='/var/www/html/wordpress'
 
-	# prohibit the access of user to the page wp-admin
+	prohibit the access of user to the page wp-admin
 	echo "if (!current_user_can('manage_options') && strpos(\$_SERVER['REQUEST_URI'], '/wp-admin') !== false) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "    wp_redirect('/wp-login.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
