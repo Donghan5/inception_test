@@ -21,13 +21,19 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
 	wp theme install astra --allow-root --path='/var/www/html/wordpress'
 	wp theme activate astra --allow-root --path='/var/www/html/wordpress'
 
-	prohibit the access of user to the page wp-admin
 	echo "if (!current_user_can('manage_options') && strpos(\$_SERVER['REQUEST_URI'], '/wp-admin') !== false) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "    wp_redirect('/wp-login.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "}" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
 
-	# remove admin cache when login
+
+    echo "add_filter('login_redirect', function(\$redirect_to, \$request, \$user) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "    if (!is_wp_error(\$user) && !in_array('administrator', \$user->roles)) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "        return home_url('/');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "    }" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "    return \$redirect_to;" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "}, 10, 3);" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+
 	echo "add_action('init', function() {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "    if (!current_user_can('manage_options')) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
@@ -35,14 +41,6 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
     echo "        header('Pragma: no-cache');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "    }" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "});" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-
-	# after login redirect to home
-    echo "add_filter('login_redirect', function(\$redirect_to, \$request, \$user) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "    if (!is_wp_error(\$user) && !in_array('administrator', \$user->roles)) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "        return home_url('/');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "    }" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "    return \$redirect_to;" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "}, 10, 3);" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
 fi
 
 echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
