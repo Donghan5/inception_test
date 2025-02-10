@@ -17,6 +17,9 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
 
     wp user create --allow-root --role=author "$USER1_LOGIN" "$USER1_MAIL" \
                     --user_pass="$USER1_PASS" --path='/var/www/html/wordpress' >> /log.txt
+
+	wp theme install oceanwp --allow-root --path='/var/www/html/wordpress'
+	wp theme activate oceanwp --allow-root --path='/var/www/html/wordpress'
 fi
 
 # echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
