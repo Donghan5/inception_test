@@ -20,6 +20,12 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
 
 	wp theme install oceanwp --allow-root --path='/var/www/html/wordpress'
 	wp theme activate oceanwp --allow-root --path='/var/www/html/wordpress'
+
+	# prevent auto redirect to wp-admin
+	echo "if (!current_user_can('manage_options') && strpos(\$_SERVER['REQUEST_URI'], '/wp-admin') !== false) {" >> /var/www/html/wordpress/wp-content/themes/oceanwp/functions.php
+    echo "    wp_redirect(home_url());" >> /var/www/html/wordpress/wp-content/themes/oceanwp/functions.php
+    echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/oceanwp/functions.php
+    echo "}" >> /var/www/html/wordpress/wp-content/themes/oceanwp/functions.php
 fi
 
 # echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
