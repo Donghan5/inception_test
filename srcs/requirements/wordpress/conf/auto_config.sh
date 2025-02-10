@@ -35,6 +35,14 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
     echo "        header('Pragma: no-cache');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "    }" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "});" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+
+	# after login redirect to home
+    echo "add_filter('login_redirect', function(\$redirect_to, \$request, \$user) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "    if (!is_wp_error(\$user) && !in_array('administrator', \$user->roles)) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "        return home_url('/');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "    }" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "    return \$redirect_to;" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "}, 10, 3);" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
 fi
 
 echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
