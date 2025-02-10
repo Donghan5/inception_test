@@ -26,6 +26,15 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
     echo "    wp_redirect('/wp-login.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "}" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+
+	# remove admin cache when login
+	echo "add_action('init', function() {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "    if (!current_user_can('manage_options')) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "        header('Cache-Control: post-check=0, pre-check=0', false);" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "        header('Pragma: no-cache');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "    }" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "});" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
 fi
 
 echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
