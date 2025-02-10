@@ -18,17 +18,17 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
     wp user create --allow-root --role=author "$USER1_LOGIN" "$USER1_MAIL" \
                     --user_pass="$USER1_PASS" --path='/var/www/html/wordpress' >> /log.txt
 
-	wp theme install oceanwp --allow-root --path='/var/www/html/wordpress'
-	wp theme activate oceanwp --allow-root --path='/var/www/html/wordpress'
+	wp theme install astra --allow-root --path='/var/www/html/wordpress'
+	wp theme activate astra --allow-root --path='/var/www/html/wordpress'
 
-	# prevent auto redirect to wp-admin
-	echo "if (!current_user_can('manage_options') && strpos(\$_SERVER['REQUEST_URI'], '/wp-admin') !== false) {" >> /var/www/html/wordpress/wp-content/themes/oceanwp/functions.php
-    echo "    wp_redirect(home_url());" >> /var/www/html/wordpress/wp-content/themes/oceanwp/functions.php
-    echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/oceanwp/functions.php
-    echo "}" >> /var/www/html/wordpress/wp-content/themes/oceanwp/functions.php
+	# prohibit the access of user to the page wp-admin
+	echo "if (!current_user_can('manage_options') && strpos(\$_SERVER['REQUEST_URI'], '/wp-admin') !== false) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "    wp_redirect('/wp-login.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    echo "}" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
 fi
 
-# echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
+echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
 # echo "define( 'SCRIPT_DEBUG', true );" >> /var/www/html/wordpress/wp-config.php
 echo "define( 'WP_HOME', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
 echo "define( 'WP_SITEURL', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
