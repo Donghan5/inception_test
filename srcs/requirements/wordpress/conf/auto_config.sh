@@ -37,31 +37,17 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
     echo "    return \$redirect_to;" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "}, 10, 3);" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
 
-	echo "add_action('wp_loaded', function() {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-	echo "    if (!current_user_can('manage_options')) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-	echo "        remove_menu_page('index.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-	echo "        remove_menu_page('edit.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-	echo "        remove_menu_page('upload.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-	echo "        remove_menu_page('edit.php?post_type=page');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-	echo "        remove_menu_page('plugins.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-	echo "        remove_menu_page('users.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-	echo "        remove_menu_page('tools.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-	echo "        remove_menu_page('options-general.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-	echo "    }" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-	echo "});" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-
-
 fi
 
-echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
+# echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
 # echo "define( 'SCRIPT_DEBUG', true );" >> /var/www/html/wordpress/wp-config.php
 # echo "define( 'WP_HOME', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
 # echo "define( 'WP_SITEURL', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
 
-echo "define( 'DISABLE_WP_CRON', true );" >> /var/www/html/wordpress/wp-config.php
-echo "define( 'COOKIE_DOMAIN', false );" >> /var/www/html/wordpress/wp-config.php
-echo "define( 'COOKIE_PATH', '' );" >> /var/www/html/wordpress/wp-config.php
-echo "define( 'SITECOOKIEPATH', '' );" >> /var/www/html/wordpress/wp-config.php
+# echo "define( 'DISABLE_WP_CRON', true );" >> /var/www/html/wordpress/wp-config.php
+# echo "define( 'COOKIE_DOMAIN', false );" >> /var/www/html/wordpress/wp-config.php
+# echo "define( 'COOKIE_PATH', '' );" >> /var/www/html/wordpress/wp-config.php
+# echo "define( 'SITECOOKIEPATH', '' );" >> /var/www/html/wordpress/wp-config.php
 
 # echo "define( 'WP_DEBUG', true);" >> /var/www/html/wordpress/wp-config.php
 # echo "define( 'WP_DEBUG_LOG', true);" >> /var/www/html/wordpress/wp-config.php
