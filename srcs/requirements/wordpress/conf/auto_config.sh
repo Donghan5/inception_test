@@ -18,6 +18,9 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
     wp user create --allow-root --role=author "$USER1_LOGIN" "$USER1_MAIL" \
                     --user_pass="$USER1_PASS" --path='/var/www/html/wordpress' >> /log.txt
 
+	wp option update siteurl 'https://donghank.42.fr' --allow-root --path='/var/www/html/wordpress';
+	wp option update home 'https://donghank.42.fr' --allow-root --path='/var/www/html/wordpress';
+
 	wp theme install astra --allow-root --path='/var/www/html/wordpress'
 	wp theme activate astra --allow-root --path='/var/www/html/wordpress'
 
@@ -34,31 +37,17 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
     echo "    return \$redirect_to;" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "}, 10, 3);" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
 
-	# remove cache and cookie in wp-admin
- 	echo "add_action('init', function() {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "    if (!current_user_can('manage_options')) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "        session_start();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "        $_SESSION = array();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "        if (ini_get('session.use_cookies')) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "            $params = session_get_cookie_params();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "            setcookie(session_name(), '', time() - 42000," >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "                $params['path'], $params['domain'], $params['secure'], $params['httponly']" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "            );" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "        }" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "        session_destroy();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "        header('Cache-Control: post-check=0, pre-check=0', false);" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "        header('Pragma: no-cache');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "        header('Expires: Sat, 01 Jan 2000 00:00:00 GMT');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "    }" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    echo "});" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-
 fi
 
 echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
 # echo "define( 'SCRIPT_DEBUG', true );" >> /var/www/html/wordpress/wp-config.php
-echo "define( 'WP_HOME', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
-echo "define( 'WP_SITEURL', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
+# echo "define( 'WP_HOME', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
+# echo "define( 'WP_SITEURL', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
+
+echo "define( 'DISABLE_WP_CRON', true );" >> /var/www/html/wordpress/wp-config.php
+echo "define( 'COOKIE_DOMAIN', false );" >> /var/www/html/wordpress/wp-config.php
+echo "define( 'COOKIE_PATH', '' );" >> /var/www/html/wordpress/wp-config.php
+echo "define( 'SITECOOKIEPATH', '' );" >> /var/www/html/wordpress/wp-config.php
 
 # echo "define( 'WP_DEBUG', true);" >> /var/www/html/wordpress/wp-config.php
 # echo "define( 'WP_DEBUG_LOG', true);" >> /var/www/html/wordpress/wp-config.php
