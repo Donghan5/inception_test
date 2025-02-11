@@ -37,6 +37,20 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
     echo "    return \$redirect_to;" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     echo "}, 10, 3);" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
 
+	echo "add_action('wp_loaded', function() {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+	echo "    if (!current_user_can('manage_options')) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+	echo "        remove_menu_page('index.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+	echo "        remove_menu_page('edit.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+	echo "        remove_menu_page('upload.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+	echo "        remove_menu_page('edit.php?post_type=page');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+	echo "        remove_menu_page('plugins.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+	echo "        remove_menu_page('users.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+	echo "        remove_menu_page('tools.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+	echo "        remove_menu_page('options-general.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+	echo "    }" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+	echo "});" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+
+
 fi
 
 echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
