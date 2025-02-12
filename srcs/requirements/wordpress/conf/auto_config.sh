@@ -2,29 +2,36 @@
 sleep 10
 
 if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
-    cp /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
-    chown www-data:www-data /var/www/html/wordpress/wp-config.php
-    chmod 644 /var/www/html/wordpress/wp-config.php
+	cp /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+	chown www-data:www-data /var/www/html/wordpress/wp-config.php
+	chmod 644 /var/www/html/wordpress/wp-config.php
 
-    wp config set DB_NAME "$SQL_DATABASE" --path='/var/www/html/wordpress' --allow-root
-    wp config set DB_USER "$SQL_USER" --path='/var/www/html/wordpress' --allow-root
-    wp config set DB_PASSWORD "$SQL_PASSWORD" --path='/var/www/html/wordpress' --allow-root
-    wp config set DB_HOST "mariadb:3306" --path='/var/www/html/wordpress' --allow-root
+	wp config set DB_NAME "$SQL_DATABASE" --path='/var/www/html/wordpress' --allow-root
+	wp config set DB_USER "$SQL_USER" --path='/var/www/html/wordpress' --allow-root
+	wp config set DB_PASSWORD "$SQL_PASSWORD" --path='/var/www/html/wordpress' --allow-root
+	wp config set DB_HOST "mariadb:3306" --path='/var/www/html/wordpress' --allow-root
 
-    wp core install --url="$DOMAIN_NAME" --title="$SITE_TITLE" \
-                    --admin_user="$ADMIN_USER" --admin_password="$ADMIN_PASSWORD" \
-                    --admin_email="$ADMIN_EMAIL" --allow-root --path='/var/www/html/wordpress'
+	wp core install --url="$DOMAIN_NAME" --title="$SITE_TITLE" \
+	                --admin_user="$ADMIN_USER" --admin_password="$ADMIN_PASSWORD" \
+	                --admin_email="$ADMIN_EMAIL" --allow-root --path='/var/www/html/wordpress'
 
-    wp user create --allow-root --role=author "$USER1_LOGIN" "$USER1_MAIL" \
-                    --user_pass="$USER1_PASS" --path='/var/www/html/wordpress' >> /log.txt
+	wp user create --allow-root --role=author "$USER1_LOGIN" "$USER1_MAIL" \
+	                --user_pass="$USER1_PASS" --path='/var/www/html/wordpress' >> /log.txt
 
 	wp option update siteurl 'https://donghank.42.fr' --allow-root --path='/var/www/html/wordpress';
 	wp option update home 'https://donghank.42.fr' --allow-root --path='/var/www/html/wordpress';
 
-	# echo "if (!current_user_can('manage_options') && strpos(\$_SERVER['REQUEST_URI'], '/wp-admin') !== false) {" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
-    # echo "    wp_redirect(wp_login_url());" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
-    # echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
-    # echo "}" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+	echo "if (strpos(\$_SERVER['REQUEST_URI'], '/wp-admin') !== false && !is_user_logged_in()) {" >> /var/www/html/wordpress/wp-config.php
+	echo "    wp_redirect(wp_login_url());" >> /var/www/html/wordpress/wp-config.php
+	echo "    exit();" >> /var/www/html/wordpress/wp-config.php
+	echo "}" >> /var/www/html/wordpress/wp-config.php
+
+	echo "if (!current_user_can('manage_options') && strpos(\$_SERVER['REQUEST_URI'], '/wp-admin') !== false) {" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+	echo "    wp_redirect(wp_login_url());" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+	echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+	echo "}" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+
+	wp rewrite flush --allow-root --path='/var/www/html/wordpress'
 
 	# # add redirect home
     # echo "add_filter('login_redirect', function(\$redirect_to, \$request, \$user) {" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
