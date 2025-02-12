@@ -21,10 +21,10 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
 	wp option update siteurl 'https://donghank.42.fr' --allow-root --path='/var/www/html/wordpress';
 	wp option update home 'https://donghank.42.fr' --allow-root --path='/var/www/html/wordpress';
 
-	echo "if (!current_user_can('manage_options') && strpos(\$_SERVER['REQUEST_URI'], '/wp-admin') !== false) {" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
-    echo "    wp_redirect(wp_login_url());" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
-    echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
-    echo "}" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+	# echo "if (!current_user_can('manage_options') && strpos(\$_SERVER['REQUEST_URI'], '/wp-admin') !== false) {" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+    # echo "    wp_redirect(wp_login_url());" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+    # echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+    # echo "}" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
 
 	# # add redirect home
     # echo "add_filter('login_redirect', function(\$redirect_to, \$request, \$user) {" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
