@@ -11,9 +11,6 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
     wp config set DB_PASSWORD "$SQL_PASSWORD" --path='/var/www/html/wordpress' --allow-root
     wp config set DB_HOST "mariadb:3306" --path='/var/www/html/wordpress' --allow-root
 
-	wp option update siteurl 'https://donghank.42.fr' --allow-root --path='/var/www/html/wordpress';
-	wp option update home 'https://donghank.42.fr' --allow-root --path='/var/www/html/wordpress';
-
     wp core install --url="$DOMAIN_NAME" --title="$SITE_TITLE" \
                     --admin_user="$ADMIN_USER" --admin_password="$ADMIN_PASSWORD" \
                     --admin_email="$ADMIN_EMAIL" --allow-root --path='/var/www/html/wordpress'
@@ -21,34 +18,21 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
     wp user create --allow-root --role=author "$USER1_LOGIN" "$USER1_MAIL" \
                     --user_pass="$USER1_PASS" --path='/var/www/html/wordpress' >> /log.txt
 
-if [ ! -f /var/www/html/wordpress/.htaccess ]; then
-    echo "Creating .htaccess file..."
-    cat <<EOL > /var/www/html/wordpress/.htaccess
-# BEGIN WordPress
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
-</IfModule>
-# END WordPress
-EOL
-    chown www-data:www-data /var/www/html/wordpress/.htaccess
-    chmod 664 /var/www/html/wordpress/.htaccess
-fi
-	# echo "if (!current_user_can('manage_options') && strpos(\$_SERVER['REQUEST_URI'], '/wp-admin') !== false) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    # echo "    wp_redirect('/wp-login.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    # echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    # echo "}" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+	wp option update siteurl 'https://donghank.42.fr' --allow-root --path='/var/www/html/wordpress';
+	wp option update home 'https://donghank.42.fr' --allow-root --path='/var/www/html/wordpress';
+
+	echo "if (!current_user_can('manage_options') && strpos(\$_SERVER['REQUEST_URI'], '/wp-admin') !== false) {" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+    echo "    wp_redirect(wp_login_url());" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+    echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+    echo "}" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+
 	# # add redirect home
-    # echo "add_filter('login_redirect', function(\$redirect_to, \$request, \$user) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    # echo "    if (!is_wp_error(\$user) && !in_array('administrator', \$user->roles)) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    # echo "        return home_url('/');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    # echo "    }" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    # echo "    return \$redirect_to;" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
-    # echo "}, 10, 3);" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
+    # echo "add_filter('login_redirect', function(\$redirect_to, \$request, \$user) {" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+    # echo "    if (!is_wp_error(\$user) && !in_array('administrator', \$user->roles)) {" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+    # echo "        return home_url('/');" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+    # echo "    }" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+    # echo "    return \$redirect_to;" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
+    # echo "}, 10, 3);" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
 
 fi
 

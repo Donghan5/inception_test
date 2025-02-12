@@ -9,6 +9,10 @@ RUN apt-get -y install sendmail
 RUN apt-get install -y php7.3\
 		php-fpm\
 		php-mysql\
+		php-pdo\
+		php-cgi\
+		php-gd php-cli\
+		php-mbstring\
 		mariadb-client
 
 RUN wget https://wordpress.org/wordpress-6.0.tar.gz -P /var/www/html
