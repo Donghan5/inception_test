@@ -38,8 +38,8 @@ fi
 
 # echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/html/wordpress/wp-config.php
 # echo "define( 'SCRIPT_DEBUG', true );" >> /var/www/html/wordpress/wp-config.php
-# echo "define( 'WP_HOME', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
-# echo "define( 'WP_SITEURL', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
+echo "define( 'WP_HOME', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
+echo "define( 'WP_SITEURL', 'https://donghank.42.fr' );" >> /var/www/html/wordpress/wp-config.php
 echo "define( 'FORCE_SSL_ADMIN', true );" >> /var/www/html/wordpress/wp-config.php
 # echo "define( 'DISABLE_WP_CRON', true );" >> /var/www/html/wordpress/wp-config.php
 # echo "define( 'COOKIE_DOMAIN', false );" >> /var/www/html/wordpress/wp-config.php
