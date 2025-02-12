@@ -4,7 +4,7 @@ sleep 10
 if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
     cp /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
     chown www-data:www-data /var/www/html/wordpress/wp-config.php
-    chmod 640 /var/www/html/wordpress/wp-config.php
+    chmod 644 /var/www/html/wordpress/wp-config.php
 
     wp config set DB_NAME "$SQL_DATABASE" --path='/var/www/html/wordpress' --allow-root
     wp config set DB_USER "$SQL_USER" --path='/var/www/html/wordpress' --allow-root
@@ -21,15 +21,6 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
 	wp option update siteurl 'https://donghank.42.fr' --allow-root --path='/var/www/html/wordpress';
 	wp option update home 'https://donghank.42.fr' --allow-root --path='/var/www/html/wordpress';
 
-	wp config set AUTH_KEY ':0K!+DMuQ-g]x|@SM1kIlI!NdJn;=?_]Yupg+-S:&SbmfK+^fqRwsrsrFiW.18' --raw --allow-root --path='/var/www/html/wordpress'
-    wp config set SECURE_AUTH_KEY 'A%R^1rBx|>+i|?MmN3F,I.BgW/MjJL13aM)xPg<[(HhwNC!j?Qz,v5qT,=ht:{,}' --raw --allow-root --path='/var/www/html/wordpress'
-    wp config set LOGGED_IN_KEY 'l4=#@=iNRcvU&zdfjRzfu,u!2{n@|305lD%KB V}&|H<Nix/944Y|T.5BB3;8G' --raw --allow-root --path='/var/www/html/wordpress'
-    wp config set NONCE_KEY ')o%dkZrC9-,@4+R%3@IO>yR7[3 (vd6nv!gk5|-Ll;qKrEWO&NsEB#;Ic,y}zV5' --raw --allow-root --path='/var/www/html/wordpress'
-    wp config set AUTH_SALT '.H=Z*;47ebU^9$OArW|*2ZO? -o+(T9trM*7M1VS+Ls*SN>C%m1f@5Wj9E1~IZ:-' --raw --allow-root --path='/var/www/html/wordpress'
-    wp config set SECURE_AUTH_SALT 'I&9D+ngm;/@Z&vq_96H<@ *Ex0zkAvsj]GZc03:EDjx+MEk+BT+*0h|7hc+VR!CY' --raw --allow-root --path='/var/www/html/wordpress'
-    wp config set LOGGED_IN_SALT '^k_->+?66mU+U}>Zi|i[%Um0ju$p|s#/jOZ1NfmFVgWCz/,vsi8rJdx{cOBZI!a' --raw --allow-root --path='/var/www/html/wordpress'
-    wp config set NONCE_SALT '$f~^U(5i_Rj+$cxL|AMflJKCWl*&-QIEy+s_K*qbAYh@_uG|jana$l;rya)0FlC' --raw --allow-root --path='/var/www/html/wordpress'
-	
 	# echo "if (!current_user_can('manage_options') && strpos(\$_SERVER['REQUEST_URI'], '/wp-admin') !== false) {" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     # echo "    wp_redirect('/wp-login.php');" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
     # echo "    exit();" >> /var/www/html/wordpress/wp-content/themes/astra/functions.php
