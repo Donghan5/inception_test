@@ -35,7 +35,8 @@ if [ ! -e /var/www/html/wordpress/wp-config.php ]; then
 	# echo "}" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
 
 	wp rewrite structure '/%postname%/' --allow-root --path='/var/www/html/wordpress'
-	wp rewrite flush --hard --allow-root --path='/var/www/html/wordpress'
+	wp rewrite flush --allow-root --path='/var/www/html/wordpress'
+	wp cache flush --allow-root --path='/var/www/html/wordpress'
 
 	# # add redirect home
     # echo "add_filter('login_redirect', function(\$redirect_to, \$request, \$user) {" >> /var/www/html/wordpress/wp-content/themes/twentytwentytwo/functions.php
